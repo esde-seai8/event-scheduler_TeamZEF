@@ -12,8 +12,10 @@ export const fetchAPI = async (endpoint, options = {}) => {
   
   if (!res.ok) {
     const errorBody = await res.json().catch(() => ({}));
-    throw new Error(errorBody.message || `Request failed with status ${res.status}`);
+    throw new Error(errorBody.error || errorBody.message || `Request failed with status ${res.status}`);
   }
   
+  // Return empty object for 204 No Content
+  if (res.status === 204) return {};
   return res.json();
 };
