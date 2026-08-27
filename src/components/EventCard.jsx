@@ -12,7 +12,7 @@ export default function EventCard({ event }) {
   return (
     <Link
       to={`/events/${event.id}`}
-      className="group rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 p-px transition duration-200 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
+      className="group rounded-lg bg-linear-to-r from-cyan-400 via-blue-500 to-violet-500 p-px transition duration-200 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
     >
       <div className="flex h-full flex-col justify-between rounded-[7px] bg-white p-5">
         <div>
