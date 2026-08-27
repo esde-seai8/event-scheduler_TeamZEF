@@ -10,17 +10,21 @@ export default function EventCard({ event }) {
     : 'Date TBA';
 
   return (
-    <Link 
-      to={`/events/${event.id}`} 
-      className="border border-slate-200 bg-white p-5 rounded-lg shadow-sm hover:shadow-md transition flex flex-col justify-between"
+    <Link
+      to={`/events/${event.id}`}
+      className="group rounded-lg bg-gradient-to-r from-cyan-400 via-blue-500 to-violet-500 p-px transition duration-200 hover:-translate-y-1 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
     >
-      <div>
-        <h3 className="font-bold text-lg text-slate-800">{event.title}</h3>
-        <p className="text-slate-500 text-sm mt-1">{event.location || 'Location TBA'}</p>
-      </div>
-      <div className="mt-4 pt-4 border-t border-slate-100 flex justify-between items-center text-xs text-slate-400">
-        <span>{formattedDate}</span>
-        <span className="text-blue-600 font-semibold">View Details &rarr;</span>
+      <div className="flex h-full flex-col justify-between rounded-[7px] bg-white p-5">
+        <div>
+          <h3 className="text-lg font-bold text-slate-800">{event.title}</h3>
+          <p className="mt-1 text-sm text-slate-500">
+            {event.location || 'Location TBA'}
+          </p>
+        </div>
+
+        <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4 text-xs text-slate-400">
+          <span>{formattedDate}</span>
+        </div>
       </div>
     </Link>
   );
