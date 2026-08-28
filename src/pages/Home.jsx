@@ -9,7 +9,7 @@ export default function Home() {
 
   useEffect(() => {
     // Fetching events using query limit=100 to show seeded events
-    fetchAPI('/api/events?limit=100')
+    fetchAPI('/events?limit=100')
       .then((data) => {
         // According to OpenAPI: GET /api/events returns { totalCount, results: [...] }
         const eventList = Array.isArray(data) ? data : (data.results || []);
