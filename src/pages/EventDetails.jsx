@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { fetchAPI } from '../utils/api';
 
 export default function EventDetails() {
@@ -7,13 +7,32 @@ export default function EventDetails() {
   const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [deleting, setDeleting] = useState(false);
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem('token');
+  const currentUserId = token
+    ? JSON.parse(atob(token.split('.')[1])).id
+    : null;
 
   useEffect(() => {
-    fetchAPI(`/api/events/${id}`)
+    fetchAPI(`/events/${id}`)
       .then((data) => setEvent(data))
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
   }, [id]);
+  
+  const handleDelete = async () => {
+    if (!window.confirm('Delete this event? This cannot be undone.')) return;
+    setDeleting(true);
+    try {
+      await fetchAPI(`/events/${id}`, { method: 'DELETE' });
+      navigate('/');
+    } catch (err) {
+      setError(err.message);
+      setDeleting(false);
+    }
+  };
 
   if (loading) return <p className="text-center mt-12 text-slate-500">Loading details...</p>;
   if (error) return <p className="text-center mt-12 text-red-500">{error}</p>;
@@ -44,6 +63,15 @@ export default function EventDetails() {
         <p className="mt-4 text-xs text-slate-400">
           Organizer ID: {event.organizerId}
         </p>
+      )}
+      {event.organizerId === currentUserId && (
+        <button
+          onClick={handleDelete}
+          disabled={deleting}
+          className="btn btn-error mt-6 w-full"
+        >
+          {deleting ? 'Deleting...' : 'Delete Event'}
+        </button>
       )}
     </div>
   );

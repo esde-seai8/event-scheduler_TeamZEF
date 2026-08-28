@@ -23,9 +23,11 @@ export default function CreateEvent() {
     setLoading(true);
 
     try {
-      const payload = {
-        ...formData,
+        const payload = {
+        title: formData.title,
         date: new Date(formData.date).toISOString(),
+        location: formData.location,
+        ...(formData.description.trim() && { description: formData.description }),
       };
       const event = await fetchAPI("/events", {
         method: "POST",
